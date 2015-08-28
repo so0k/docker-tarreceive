@@ -22,10 +22,9 @@ COPY sshd_config /etc/ssh/sshd_config
 #had to customize sshcommand to work on alpine
 #need to use entry.sh to generate host key on container start   
 COPY sshcommand entry.sh /usr/bin/
-RUN chmod +x /usr/bin/sshcommand /usr/bin/entry.sh && \
-    ssh-keygen -A
+RUN chmod +x /usr/bin/sshcommand /usr/bin/entry.sh
 
-#ENTRYPOINT ["/usr/bin/entry.sh"]
+ENTRYPOINT ["/usr/bin/entry.sh"]
 
 VOLUME ["/etc/ssh/"]
 
