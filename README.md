@@ -1,5 +1,5 @@
 ### Summary
-[![](https://imagelayers.io/?images=so0k/tarreceive:latest.svg)](https://imagelayers.io/?images=so0k/tarreceive:latest 'Get your own badge on imagelayers.io')
+[![](https://badge.imagelayers.io/so0k/tarreceive:latest.svg)](https://imagelayers.io/?images=so0k/tarreceive:latest 'Get your own badge on imagelayers.io')
 
 This repository is based on [progrium/sshcommand](https://github.com/progrium/sshcommand) which creates a system user made for running a single command via SSH and manages an ACL of SSH keys (authorized_keys). This allows us to provide a server endpoint where a piped in `tar` data stream is extracted into an environment variable specified volume.
 
