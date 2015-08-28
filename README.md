@@ -1,6 +1,9 @@
 ### Summary
+[![](https://imagelayers.io/?images=so0k/tarreceive:latest.svg)](https://imagelayers.io/?images=so0k/tarreceive:latest 'Get your own badge on imagelayers.io')
 
-This repository is based on [progrium/sshcommand](https://github.com/progrium/sshcommand) which creates a system user made for running a single command via SSH and manages an ACL of SSH keys (authorized_keys). This allows us to provides a server endpoint where a piped in `tar` data stream is extracted into an environment variable specified volume.
+This repository is based on [progrium/sshcommand](https://github.com/progrium/sshcommand) which creates a system user made for running a single command via SSH and manages an ACL of SSH keys (authorized_keys). This allows us to provide a server endpoint where a piped in `tar` data stream is extracted into an environment variable specified volume.
+
+[source on github](https://github.com/so0k/docker-tarreceive)
 
 References:
 
@@ -10,7 +13,7 @@ Notes:
 
 * If you have multiple developers, you should use a version control system and Continuous Deployment solution instead of this!
 * I do not guarantuee there is no exploit to compromise the host
-* Added the usage of eval to expand target directory environment variable
+* Added the usage of eval to expand target directory environment variable, and `eval` is a common mispelling of `evil` :(
 
 ### Table Of Contents
 
@@ -27,7 +30,7 @@ Notes:
 
 #### TODO
 
-* ~~Change tar forced-command to take an environment variable for target_dir, allowing to run tar_receive with volumes_from other containers~~
+* ~~Changed tar forced-command to take an environment variable for target_dir, allowing to run tar_receive with `--volumes-from` other containers~~
 * Provide a mechanism to clear the target directory prior to piping in the new data
 * Add feedback about the command execution to the ssh client
 * Add powershell script for Windows developers (msys git / plink)
@@ -46,7 +49,8 @@ To run a container listening for tar pushes, follow the following 2 sections:
         chown -R 1000:1000 $tar_target
         docker run -d --name tar_receive -v $tar_target:/target -p <port>:22 so0k/tarreceive:1.1
 
-        #or link tar_receive to another container
+    or link tar_receive to another container and specify the target directory through `$TARGET_DIR` env var
+    
         docker run -d --name tar_receive --volumes-from nginx -e "TARGET_DIR=/usr/share/nginx/html/" -p <port>:22 so0k/tarreceive:1.1
 
 2. for each developer, instal public key of developer to enable tar pushing (for example, adding all currently authorized users to tar command)
@@ -55,7 +59,7 @@ To run a container listening for tar pushes, follow the following 2 sections:
 
 #### Client setup:
 
-1. As the host key changes each time the container restarts, it might be advisable to reduce host key checking (yet this is not without risk):
+1. As the host key changes each time the container is created/ran, it might be advisable to reduce host key checking (yet this is not without risk):
    (Replace localhost with hostname of VPS)
 
         gitserver=localhost
