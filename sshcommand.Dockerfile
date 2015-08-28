@@ -12,7 +12,7 @@ RUN apk update && \
     apk add bash openssh && \
     rm -rf /var/cache/apk/* 
 
-#COPY sshd_config /etc/ssh/sshd_config
+COPY sshd_config /etc/ssh/sshd_config
 
 # RUN apk add --update wget ca-certificates && \
 #     rm -rf /var/cache/apk/* && \
@@ -23,8 +23,7 @@ RUN apk update && \
 #need to use entry.sh to generate host key on container start   
 COPY sshcommand entry.sh /usr/bin/
 RUN chmod +x /usr/bin/sshcommand /usr/bin/entry.sh && \
-    ssh-keygen -A  && \
-    echo -e "Port 22\n" >> /etc/ssh/sshd_config
+    ssh-keygen -A
 
 #ENTRYPOINT ["/usr/bin/entry.sh"]
 
