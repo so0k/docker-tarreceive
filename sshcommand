@@ -16,8 +16,8 @@ case "$1" in
     if id -u $USER >/dev/null 2>&1; then
       echo "User '$USER' already exists"
     else
-      #alpine, create without password and unlock
-      adduser -D $USER
+      #alpine: create without password, bash shell and unlock
+      adduser -s /bin/bash -D $USER
       passwd -u $USER
     fi
 
@@ -39,8 +39,9 @@ case "$1" in
     USERHOME=$(sh -c "echo ~$USER")
 
     KEY=$(cat)
+    #source /etc/profile to get any environment variables pushed there
     FINGERPRINT=$(ssh-keygen -lf /dev/stdin <<< $(echo $KEY) | awk '{print $2}')
-    KEY_PREFIX="command=\"FINGERPRINT=$FINGERPRINT NAME=$NAME \`cat $USERHOME/.sshcommand\` \$SSH_ORIGINAL_COMMAND\",no-agent-forwarding,no-user-rc,no-X11-forwarding,no-port-forwarding"
+    KEY_PREFIX="command=\". /etc/profile;FINGERPRINT=$FINGERPRINT NAME=$NAME \`cat $USERHOME/.sshcommand\` \$SSH_ORIGINAL_COMMAND\",no-agent-forwarding,no-user-rc,no-X11-forwarding,no-port-forwarding"
     echo "$KEY_PREFIX $KEY" >> "$USERHOME/.ssh/authorized_keys"
     echo $FINGERPRINT
     ;;
