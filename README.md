@@ -1,4 +1,3 @@
-
 ### Summary
 
 This repository is based on [progrium/sshcommand](https://github.com/progrium/sshcommand) to provide a server endpoint where a piped in tarred data stream is extracted into a specified volume.
@@ -6,6 +5,19 @@ This repository is based on [progrium/sshcommand](https://github.com/progrium/ss
 References:
 
 * http://meinit.nl/using-tar-and-ssh-to-efficiently-copy-files-preserving-permissions
+
+### Table Of Contents
+
+<!-- MarkdownTOC depth=4 autolink=true bracket=round -->
+
+- [TODO:](#todo)
+- [Setup](#setup)
+    - [VPS setup:](#vps-setup)
+    - [Client setup:](#client-setup)
+- [Client Usage:](#client-usage)
+- [Building the images](#building-the-images)
+
+<!-- /MarkdownTOC -->
 
 #### TODO:
 
