@@ -1,0 +1,41 @@
+#!/bin/bash
+
+usage()
+{
+cat << EOF
+usage: $0 subcommands
+
+Recieve tarred directory and export to $TARGET_DIR
+
+OPTIONS:
+   clean     Clean $TARGET_DIR prior to export
+   help      Show this message
+EOF
+}
+
+cleantarget()
+{
+  echo "cleaning $TARGET_DIR"
+  rm -rf $TARGET_DIR/*
+}
+
+#parse subcommands
+while [ ! $# -eq 0 ]
+do
+    case "$1" in
+        help)
+            usage
+            exit
+            ;;
+        clean)
+            cleantarget
+            ;;
+    esac
+    shift
+done
+
+echo "exporting data to $TARGET_DIR ..."
+#wait for input
+tar xf - -C $TARGET_DIR
+
+echo "done."
